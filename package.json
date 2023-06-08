@@ -1,0 +1,54 @@
+{
+  "name": "cpsg-66-respon",
+  "version": "1.0.0",
+  "description": "Ini buat template konfigurasi bootstrap via npm\r tinggal lanjutin sesuai page yang kalian kerjakan",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack.prod.js",
+    "i": "webpack-dev-server --config webpack.dev.js",
+    "lint": "eslint ./src/scripts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ilhamokta74/RESPON.git"
+  },
+  "keywords": [],
+  "author": "Respon",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "babel-loader": "^8.1.0",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "codeceptjs": "^3.0.7",
+    "copy-webpack-plugin": "^6.0.3",
+    "css-loader": "^3.6.0",
+    "eslint": "^8.18.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "file-loader": "^6.0.0",
+    "html-webpack-plugin": "^4.3.0",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.43.0",
+    "webpack-bundle-analyzer": "^4.4.2",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^5.0.9"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.1.1",
+    "axios": "^1.1.3",
+    "bootstrap": "^5.1.3",
+    "bootstrap-icons": "^1.8.3",
+    "datatables.net-dt": "^1.13.4",
+    "express": "^4.18.2",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.7.0",
+    "nanoid": "^4.0.2",
+    "regenerator-runtime": "^0.13.5"
+  },
+  "bugs": {
+    "url": "https://github.com/Ilhamokta74/RESPON/issues"
+  },
+  "homepage": "https://github.com/Ilhamokta74/RESPON#readme"
+}
