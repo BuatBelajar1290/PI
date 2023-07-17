@@ -1,6 +1,7 @@
+import UrlParser from '../../routes/url-parser';
 import axios from 'axios';
 
-const AdminPuskesmasData = {
+const AdminPuskesmasDataSearch = {
   async render() {
     return `
     <header id="header" class="fixed-top ">
@@ -13,7 +14,7 @@ const AdminPuskesmasData = {
       <nav class="navbar" style="background-color: #ffffff;">
         <div class="container">
           <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" id="search" placeholder="Search Puskesmas" style="width: 100%;" aria-label="Search">
+            <input class="form-control me-2" type="search" id="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success" id="search-btn" type="submit">Search</button>
           </form>
           <a href="#/admin-daftar-puskesmas"><button type="button" class="btn btn-success">New +</button></a>
@@ -42,7 +43,9 @@ const AdminPuskesmasData = {
   },
 
   async afterRender() {
-    const res = await axios('https://respon-backend.vercel.app/puskesmas/list');
+    const url = UrlParser.parseActiveUrlWithoutCombiner();
+    const res = await axios(`https://respon-backend.vercel.app/puskesmas/listInti?idName=%${url.id}%`);
+    console.log(res);
     let datalist = '';
 
     res.data.forEach((data) => {
@@ -54,8 +57,8 @@ const AdminPuskesmasData = {
           <td class="text-center">${data.noTelepon}</td>
           <td class="d-flex justify-content-center">
             <a href="#/admin-detail-puskesmas/${data.idName}"><button type="button" class="btn btn-info">Info</button></a>
-            <a href="#/admin-data-puskesmas/${data.idName}/edit"><button type="button" class="btn btn-success me-3 ms-3">Edit</button></a>
-            <a href="#/admin-data-puskesmas/${data.idName}/delete"><button type="button" id="delete" class="btn btn-danger" value="${data.id}">Hapus</button></a>
+            <a href="#/admin-data-puskesmas/${data.id}/edit"><button type="button" class="btn btn-success me-3 ms-3">Edit</button></a>
+            <a href="#/admin-data-puskesmas/${data.id}/delete"><button type="button" id="delete" class="btn btn-danger" value="${data.id}">Hapus</button></a>
           </td>
         </tr>
       </tbody>
@@ -70,20 +73,12 @@ const AdminPuskesmasData = {
       searchBtn.preventDefault();
 
       if (search.value === '') {
-        document.location.reload();
+        document.location.href = '/#/admin-data-puskesmas';
       } else {
-        let kalimat = search.value;
-        let kataArray = kalimat.split(' ');
-
-        // Menggabungkan kembali kata-kata dengan tanda "-" sebagai pemisah
-        let kalimatBaru = kataArray.join('-').toLowerCase();
-
-        console.log(kalimatBaru);
-        document.location.href = `/#/admin-data-puskesmas-search/${kalimatBaru}`;
-        console.log(search.value);
+        document.location.href = `/#/admin-data-puskesmas-search/${search.value}`;
       }
     });
   },
 };
 
-export default AdminPuskesmasData;
+export default AdminPuskesmasDataSearch;

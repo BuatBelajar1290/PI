@@ -39,7 +39,7 @@ const Reservation = {
      
   async afterRender() {
     const url = UrlParser.parseActiveUrlWithoutCombiner();
-    const res = await axios(`http://localhost:3000/puskesmas/listInti?idName=%${url.id}%`);
+    const res = await axios(`https://respon-backend.vercel.app/puskesmas/listInti?idName=%${url.id}%`);
     let datalist = '';
     console.log(res);
     res.data.forEach((data) => {
@@ -79,7 +79,7 @@ const Reservation = {
         let kataArray = kalimat.split(' ');
 
         // Menggabungkan kembali kata-kata dengan tanda "-" sebagai pemisah
-        let kalimatBaru = kataArray.join('-');
+        let kalimatBaru = kataArray.join('-').toLowerCase();
 
         console.log(kalimatBaru);
         document.location.href = `/#/cari-puskesmas/${kalimatBaru}`;

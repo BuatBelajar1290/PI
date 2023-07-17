@@ -1,4 +1,8 @@
 import axios from 'axios';
+import UrlParser from '../../routes/url-parser';
+import Swal from 'sweetalert2';
+// import multer from 'multer';
+// import path from 'path';
 
 const AdminDokterDaftar = {
   async render() {
@@ -9,41 +13,42 @@ const AdminDokterDaftar = {
 
     <div class="container shadow bg-light p-3 my-5 rounded-4">
         <h3 class="text-center mt-3 mb-5">ISI DATA DOKTER</h3> 
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-sm-6">
                 <form>
+                    <div id="puskesmasId">
+                      
+                    </div>
+
                     <div class="mb-3 row px-4">
-                        <label for="namaDokter" class="col-sm-5 col-form-label">Nama Dokter</label>
+                        <label class="col-sm-5 col-form-label">Nama Dokter</label>
                         <div class="col-sm-7">
-                          <input type="text" class="form-control" id="namaDokter">
+                          <input type="text" class="form-control" id="namaDokter" required>
                         </div>
                     </div>
 
                     <div class="mb-3 row px-4">
-                        <label for="alamatDokter" class="col-sm-5 col-form-label">Poli Praktek</label>
+                        <label class="col-sm-5 col-form-label">Poli Praktek</label>
                         <div class="col-sm-7">
-                          <input type="text" class="form-control" id="Poli">
+                          <input type="text" class="form-control" id="Poli" required>
                         </div>
                     </div>
 
                     <div class="mb-3 row px-4">
-                        <label for="NoTelepon" class="col-sm-5 col-form-label">Jadwal Praktek</label>
+                        <label class="col-sm-5 col-form-label">Jadwal Praktek</label>
                         <div class="col-sm-7">
-                          <input type="text" class="form-control" id="NoTelepon">
+                          <input type="text" class="form-control" id="jadwalPraktek" required>
                         </div>
                     </div>
 
                     <div class="mb-3 row px-4">
-                        <label for="linkMaps" class="col-sm-5 col-form-label">Jam Praktek</label>
+                        <label class="col-sm-5 col-form-label">Jam Praktek</label>
                         <div class="col-sm-7">
-                          <input type="text" class="form-control" id="linkMaps" disabled>
-                        </div>
-                    </div>
-
-                    <div class="mb-3 row px-4">
-                        <label for="foto" class="col-sm-5 col-form-label">Image</label>
-                        <div class="col-sm-7">
-                          <input type="file" class="form-control" id="foto" accept="image/*" src="../">
+                          <select class="form-select" aria-label="Pilih Jam Praktek" id="jamPraktek">
+                            <option selected></option>
+                            <option value="08:00 - 11:30">08:00 - 11:30</option>
+                            <option value="13:00 - 16:30">13:00 - 16:30</option>
+                          </select>
                         </div>
                     </div>
                 </form>
@@ -55,71 +60,87 @@ const AdminDokterDaftar = {
         </div>
     </div>
 
-    <footer class="footer-admin">
-      <footer-admin></footer-admin>
+    <footer>
+      <footer-bar></footer-bar>
     </footer>
       `;
   },
 
   async afterRender() {
+    const url = UrlParser.parseActiveUrlWithoutCombiner();
+    const res = await axios.get(`https://respon-backend.vercel.app/puskesmas/listInti?idName=${url.id}`);
     // const res = await axios('https://respon-backend.vercel.app/pasien/list');
-    // let datalist = '';
-    // res.data.forEach((data) => {
-    //   datalist += `
-    //   <tbody>
-    //     <tr>
-    //       <th scope="row" class="text-center">${data.id}</th>
-    //       <td class="text-center">${data.name}</td>
-    //       <td class="text-center">${data.poli}</td>
-    //       <td class="text-center">${data.tax}</td>
-    //       <td class="d-flex justify-content-center">
-    //         <button type="button" class="btn btn-warning">Edit</button>
-    //         <button type="button" class="btn btn-danger" id="delete">Delete</button>
-    //       </td>
-    //     </tr>
-    //   </tbody>
-    //   `;
-    //   document.querySelector('#tes').innerHTML = datalist;
+    let datalist = '';
+    console.log(datalist);
+    res.data.forEach((data) => {
+      datalist += `
+                    <div class="mb-3 row px-4">
+                      <label class="col-sm-5 col-form-label">Puskesmas Id</label>
+                      <div class="col-sm-7">
+                        <input type="text" class="form-control" id="idPuskesmas" value="${data.idName}" disabled>
+                      </div>
+                    </div>
+      `;
+      document.querySelector('#puskesmasId').innerHTML = datalist;
+    });
+
+    // // Set storage engine for uploaded files
+    // const storage = multer.diskStorage({
+    //   destination: './public/uploads/',
+    //   filename(req, file, cb) {
+    //     cb(null, file.fieldname + Date.now() + path.extname(file.originalname));
+    //   }
     // });
+
+    // // Initialize multer upload
+    // const upload = multer({ storage, }).single('image');
+
     const namaDokter = document.querySelector('#namaDokter');
-    const alamatDokter = document.querySelector('#alamatDokter');
-    const NoTelepon = document.querySelector('#NoTelepon');
-    const linkMaps = document.querySelector('#linkMaps');
-    const Poli = document.querySelector('#Poli');
-    const Denah = document.querySelector('#Denah');
-    const Foto = document.querySelector('#Foto');
-    const IdName = document.querySelector('#IdName');
+    const poli = document.querySelector('#Poli');
+    const jadwalPraktek = document.querySelector('#jadwalPraktek');
+    const jamPraktek = document.querySelector('#jamPraktek');
+    const idPuskesmas = document.querySelector('#idPuskesmas');
     const btnSubmit = document.querySelector('#submit');
 
     btnSubmit.addEventListener('click', (e) => {
       e.preventDefault();
-      if (namaDokter.value === '') {
-        // eslint-disable-next-line no-alert
-        alert('Inputan tidak boleh ada yang kosong');
-        // namaPuskesmas.value = '';
-        // alamatPuskesmas.value = '';
+
+      if (namaDokter.value === '' || 
+      poli.value === '' || 
+      jadwalPraktek.value === '' ||
+      jamPraktek.value === '' || 
+      idPuskesmas.value === '') {
+        Swal.fire({
+          icon: 'error',
+          title: 'Ada Form Yang Belum Terisi',
+          showConfirmButton: false,
+          timer: 1500
+        });
       } else {
-        axios.post(`https://respon-backend.vercel.app/dokter/add?namaDokter=${namaDokter.value}&poli=${Poli.value}&puskesmasId=puskesmas-rajeg`)
+        axios.post(`https://respon-backend.vercel.app/dokter/add?namaDokter=${namaDokter.value}&poli=${poli.value}&jamPraktek=${jamPraktek.value}&jadwalPraktek=${jadwalPraktek.value}&puskesmasId=${idPuskesmas.value}`)
           .then(function (response) {
             console.log(response);
           })
           .catch(function (error) {
             console.log(error);
           });
-        // eslint-disable-next-line no-alert
-        alert('Inputan berhasil');
-        namaDokter.value = '';
-        NoTelepon.value = '';
-        linkMaps.value = '';
-        Poli.value = '';
-        Denah.value = '';
-        Foto.value = '';
-        IdName.value = '';
+
+        setTimeout(() => {
+          document.location.reload();
+        }, 3000);
+
+        console.log(idPuskesmas.value, jamPraktek.value);
+        Swal.fire({
+          icon: 'success',
+          title: 'Berhasil Tambah Data',
+          showConfirmButton: false,
+          timer: 1500
+        });
       }
     });
 
     const daftar = document.querySelector('#daftar');
-    daftar.classList.add('active');
+    // daftar.classList.add('active');
   },
 };
 

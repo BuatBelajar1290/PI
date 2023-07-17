@@ -19,26 +19,25 @@ const Home = {
               <div class="icon-box">
                 <div class="icon"><i class="fa-solid fa-book-medical"></i></div>
                 <h4><a href="">Pencarian Online</a></h4>
-                <p>Pencarian Puskesmas dilakukan secara online tanpa perlu datang ke lokasi</p>
+                <p>Pencarian Puskesmas dilakukan secara online tanpa perlu mencari satu persatu</p>
               </div>
             </div>
   
             <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0">
-              <div class="icon-box">
-                <div class="icon"><i class="fa-solid fa-map-location-dot"></i></div>
-                <h4><a href="">Maps Puskesmas</a></h4>
-                <p>Melakukan pengecekan lokasi puskesmas yang dituju</p>
-              </div>
+            <div class="icon-box">
+              <div class="icon"><i class="fa-solid fa-map-location-dot"></i></div>
+              <h4><a href="">Maps Puskesmas</a></h4>
+              <p>Melakukan pengecekan lokasi secara akurat dari puskesmas yang dituju</p>
             </div>
+          </div>
   
             <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0">
               <div class="icon-box">
                 <div class="icon"><i class="fa-solid fa-hourglass-start"></i></div>
                 <h4><a href="">Hemat Waktu</a></h4>
-                <p>Dapat menghemat waktu dengan melakukan semua secara online</p>
+                <p>Dapat menghemat waktu karena pencarian puskesmasnya dilakukan secara online</p>
               </div>
             </div>
-  
           </div>
   
         </div>

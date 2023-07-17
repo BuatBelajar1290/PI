@@ -1,3 +1,6 @@
+import Swal from 'sweetalert2';
+import axios from 'axios';
+
 const Contact = {
   async render() {
     return `
@@ -10,7 +13,7 @@ const Contact = {
         <div class="container">
           <div class="section-title">
             <h2>Kontak</h2>
-            <p>Jika Anda memiliki pertanyaan terkait pelayanan RESPON/kami, sliakan mengisi form dibawah berikut</p>
+            <p>Jika Anda memiliki pertanyaan terkait pelayanan kami, sliakan mengisi form dibawah berikut</p>
           </div>
 
           <div class="row">
@@ -19,24 +22,22 @@ const Contact = {
                 <div class="address">
                   <i class="fa-solid fa-location-dot"></i>
                   <h4>Lokasi:</h4>
-                  <p>Jl. Batik Kumeli No.50, Sukaluyu,
-                  Kec. Cibeunying Kaler, Kota Bandung
-                  Jawa Barat 40123</p>
+                  <p>Perum Nuansa Mekarsari A13 No 34
+                  Kec. Rajeg, Kabupaten Tangerang,
+                  Banten 15540</p>
                 </div>
 
                 <div class="email">
                   <i class="fa-solid fa-envelope"></i>
                   <h4>Email:</h4>
-                  <p>respon@gmail.com</p>
+                  <p>ilhamoktavian74@gmail.com</p>
                 </div>
 
                 <div class="phone">
                   <i class="fa-solid fa-phone"></i>
                   <h4>Telepon:</h4>
-                  <p>+62-8569-7845-392</p>
+                  <p>+62-8389-2366-118</p>
                 </div>
-
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.9569524777266!2d107.63166691459269!3d-6.895752595017268!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e7a55a715555%3A0xb8bb411d2516aad6!2sDicoding%20Academy!5e0!3m2!1sid!2sid!4v1656566623244!5m2!1sid!2sid" frameborder="0" style="border:0; width: 100%; height: 290px;" allowfullscreen></iframe>
               </div>
             </div>
 
@@ -45,27 +46,33 @@ const Contact = {
             <div class="row">
               <div class="form-group col-md-6">
                 <label for="name">Nama</label>
-                <input placeholder="Masukkan Nama Anda" type="text" name="name" class="form-control" id="name" required>
+                <input placeholder="Masukkan Nama Anda" type="text" name="name" class="form-control" id="nama" required>
               </div>
+
               <div class="form-group col-md-6">
                 <label for="name">Email</label>
                 <input placeholder="Masukkan Email Anda" type="email" class="form-control" name="email" id="email" required>
               </div>
             </div>
+
             <div class="form-group">
-              <label for="name">Subjek</label>
-              <input placeholder="Masukkan Subjek Pesan" type="text" class="form-control" name="subject" id="subject" required>
+              <label for="name">Subject</label>
+                <select class="form-select" id="subject">
+                  <option selected></option>
+                  <option value="Mendaftarkan Puskesmas">Mendaftarkan Puskesmas</option>
+                  <option value="Laporan Bug">Laporan Bug</option>
+                  <option value="Bertanya Seputar Benefit">Bertanya Seputar Benefit</option>
+                </select>
             </div>
+            
             <div class="form-group">
               <label for="name">Pesan</label>
-              <textarea placeholder="Masukkan Pesan Anda" class="form-control" name="message" rows="10" required></textarea>
+                <textarea placeholder="Masukkan Pesan Anda" class="form-control" name="message" rows="10" id="pesan" maxlength="300" required></textarea>
             </div>
-            <div class="my-3">
-              <div class="loading">Loading</div>
-              <div class="error-message"></div>
-              <div class="sent-message">Pesan Anda Telah Terkirim. Terima Kasih</div>
+
+            <div class="text-center">
+              <button type="submit" id="button">Kirim Pesan</button>
             </div>
-            <div class="text-center"><button type="submit">Kirim Pesan</button></div>
           </form>
         </div>
 
@@ -78,7 +85,63 @@ const Contact = {
   },
    
   async afterRender() {
-    // Fungsi ini akan dipanggil setelah render()
+    const nama = document.querySelector('#nama');
+    const email = document.querySelector('#email');
+    const subject = document.querySelector('#subject');
+    const pesan = document.querySelector('#pesan');
+    const btnSubmit = document.querySelector('#button');
+
+    btnSubmit.addEventListener('click', (klik) => {
+      klik.preventDefault();
+
+      if (nama.value === '' || email.value === '' || subject.value === '' || pesan.value === '') {
+        if (nama.value === '') {
+          Swal.fire(
+            'Gagal',
+            'Nama Belum Terisi',
+            'error'
+          );
+        } else if (email.value === '') {
+          Swal.fire(
+            'Gagal',
+            'Email Belum Terisi',
+            'error'
+          );
+        } else if (subject.value === '') {
+          Swal.fire(
+            'Gagal',
+            'Subject Belum Terisi',
+            'error'
+          );
+        } else if (pesan.value === '') {
+          Swal.fire(
+            'Gagal',
+            'Pesan Belum Terisi',
+            'error'
+          );
+        } else {
+          Swal.fire(
+            'Gagal',
+            'Isi Semua Form Dulu',
+            'error'
+          );
+        }
+      } else {
+        axios.post(`https://respon-backend.vercel.app/message/add?Nama=${nama.value}&Email=${email.value}&Subject=${subject.value}&Pesan=${pesan.value}`)
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        Swal.fire({
+          icon: 'success',
+          title: 'Pesan Anda Telah Terkirim. Terima Kasih',
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+    });
   },
 };
    

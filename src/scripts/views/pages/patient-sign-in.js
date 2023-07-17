@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { nanoid } from 'nanoid';
+import Swal from 'sweetalert2';
 
 const SignIn = {
   async render() {
@@ -88,15 +89,27 @@ const SignIn = {
 
       if (email.value === '' || password.value === '') {
         if (email.value === '' && password.value === '') {
-          alert('Kolom Email dan Password Tidak Boleh Kosong');
+          Swal.fire(
+            'Gagal Login',
+            'Email dan Password Belum Terisi',
+            'error'
+          );
         } else if (email.value === '') {
-          alert('Kolom Email Tidak Boleh Kosong');
+          Swal.fire(
+            'Gagal Login',
+            'Email Belum Terisi',
+            'error'
+          );
         } else if (password.value === '') {
-          alert('Kolom Password Tidak Boleh Kosong');
+          Swal.fire(
+            'Gagal Login',
+            'Password Belum Terisi',
+            'error'
+          );
         } 
         // document.location.reload();
       } else if (email.value === `${username}` && password.value === `${sandi}`) {
-        axios.put(`http://localhost:3000/admin/update?Email=${email.value}&uuid=${uuid}`)
+        axios.put(`https://respon-backend.vercel.app/admin/update?Email=${email.value}&uuid=${uuid}`)
           .then(function (response) {
             console.log(response);
           })
@@ -104,10 +117,33 @@ const SignIn = {
             console.log(error);
           });
 
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1800,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+          }
+        });
+          
+        Toast.fire({
+          icon: 'success',
+          title: 'Signed in successfully'
+        });
+
         console.log('masuk pak eko');
-        document.location.href = '/#/admin-home';
+        setTimeout(() => {
+          document.location.href = '/#/admin-home';
+        }, 2000);
       } else {
-        alert('Email atau Password salah');
+        Swal.fire(
+          'Gagal Login',
+          'Email Atau Password Salah',
+          'error'
+        );
       } 
     });
     // btnMasuk.addEventListener(onclick = (e) => {

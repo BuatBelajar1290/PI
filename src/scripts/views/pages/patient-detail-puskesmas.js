@@ -9,20 +9,20 @@ const Detail = {
     </header>
     
     <div class="content" id="main-content">
-        <section id="detail" class="detail">
-            <div class="container" id="Puskesmas-detail">
+      <section id="detail" class="detail">
+        <div class="container" id="Puskesmas-detail">
             
-            </div>
-          </section>
+        </div>
+      </section>
 
-          <section class="list-puskesmas">
-            <div class="container">
-                <h3 class="section-title">DAFTAR DOKTER</h3>
-                <div class="row g-4" id="Dokter-detail">                  
+      <section class="list-puskesmas">
+        <div class="container">
+        <h3 class="section-title">DAFTAR DOKTER</h3>
+          <div class="row g-4" id="Dokter-detail">
 
-                </div>
-            </div>
-        </section>
+          </div>
+        </div>
+      </section>
     </div>
     `;
   },
@@ -72,20 +72,33 @@ const Detail = {
     });
 
     resp.data.forEach((data) => {
-      dataDokter += `
-      <div class="col-md-6 col-lg-4">
-                        <div class="puskesmas-item rounded overflow-hidden">
-                            <img class="img-fluid" src="./images/image3.jpg"  alt="">
+      dataDokter += `                  
+                        <div class="col-md-6 col-lg-4">
+                          <div class="puskesmas-item rounded overflow-hidden">
+                            <img class="img-fluid" src="./images/image2.jpg"  alt="">
                             <div class="position-relative p-4 pt-0">
-                                <div class="puskesmas-icon">
-                                    <i class="fa-solid fa-hospital fa-3x"></i>
-                                </div>
-                                <h4 class="mb-3">${data.namaDokter}</h4>
-                                <p>Stet stet justo dolor sed duo. Ut clita sea sit ipsum diam lorem diam.</p>
-                                <a class="small fw-medium" href="#/detail-puskesmas/${data.idName}">Lanjut Daftar<i class="fa fa-arrow-right ms-2"></i></a>
+                              <div class="row my-4">
+                              <h4 class="">${data.namaDokter}</h4>
+                              <table class="table-borderless text-dark">
+                                <tbody>
+                                  <tr class=" text-dark">
+                                    <td class="pl-5"><strong>Poli</strong></td>
+                                    <td>${data.namaPuskesmas}</td>
+                                  </tr>
+                                  <tr class=" text-dark">
+                                    <td style="width:15rem"><strong>Jadwal Praktek</strong></td>
+                                    <td>${data.jadwalPraktek}</td>
+                                  </tr>
+                                  <tr class=" text-dark">
+                                    <td style="width:15rem"><strong>Jam Praktek</strong></td>
+                                    <td>${data.jamPraktek}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                              </div>
                             </div>
+                          </div>
                         </div>
-                    </div>
       `;
       document.querySelector('#Puskesmas-detail').innerHTML = datalist;
       document.querySelector('#Dokter-detail').innerHTML = dataDokter;

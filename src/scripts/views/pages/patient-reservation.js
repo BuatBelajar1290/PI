@@ -1,17 +1,9 @@
 import axios from 'axios';
 import { Button } from 'bootstrap';
+import Swal from 'sweetalert2';
 
 const Reservation = {
   async render() {
-    // const token = await axios('http://localhost:3000/admin/list');
-    
-    // let uuid = '';
-    
-    // token.data.forEach((data) => {
-    //   uuid += `${data.uuid}`;
-    // });
-    
-    // console.log(uuid);
     return `
     <header id="header" class="fixed-top ">
       <app-bar></app-bar>
@@ -27,7 +19,7 @@ const Reservation = {
                     </div>
                     <div class="search">
                         <i class="fa fa-search"></i>
-                        <input type="text" class="form-control" placeholder="Cari Puskesmas" id="cari-puskesmas">
+                        <input type="text" class="form-control" placeholder="Cari Puskesmas" id="cari-puskesmas" required>
                         <button class="btn" id="search">Search</button>
                     </div>
                 </div>
@@ -54,13 +46,13 @@ const Reservation = {
       datalist += `
                     <div class="col-md-6 col-lg-4">
                         <div class="puskesmas-item rounded overflow-hidden">
-                            <img class="img-fluid" src="${data.foto}"  alt="ini ambar" style="width: 100%; height: 20rem;>
+                            <img class="img-fluid" src="/images/image3.jpg"  alt="ini gambar" style="width: 100%; height: 20rem;>
                             <div class="position-relative p-4 pt-0">
                                 <div class="puskesmas-icon">
                                     <i class="fa-solid fa-hospital fa-3x"></i>
                                 </div>
-                                <h4 class="mb-3">${data.namaPuskesmas}</h4>
-                                <p>Stet stet justo dolor sed duo. Ut clita sea sit ipsum diam lorem diam.</p>
+                                <h4 class="mb-3 text-body">${data.namaPuskesmas}</h4>
+                                <p class="text-body">Stet stet justo dolor sed duo. Ut clita sea sit ipsum diam lorem diam.</p>
                                 <a class="small fw-medium" href="#/detail-puskesmas/${data.idName}">Lanjut Daftar<i class="fa fa-arrow-right ms-2"></i></a>
                             </div>
                         </div>
@@ -76,13 +68,17 @@ const Reservation = {
       e.preventDefault();
 
       if (cariPuskesmas.value === '') {
-        alert('anda belum mengisi puskesmas yang ingin dicari');
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Masukkan Nama Puskesmas Yang Ingin Di Cari',
+        });
       } else {
         let kalimat = cariPuskesmas.value;
         let kataArray = kalimat.split(' ');
 
         // Menggabungkan kembali kata-kata dengan tanda "-" sebagai pemisah
-        let kalimatBaru = kataArray.join('-');
+        let kalimatBaru = kataArray.join('-').toLowerCase();
 
         console.log(kalimatBaru);
         document.location.href = `/#/cari-puskesmas/${kalimatBaru}`;

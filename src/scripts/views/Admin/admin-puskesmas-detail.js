@@ -25,8 +25,9 @@ const AdminPuskesmasDetail = {
         <tr>
           <th scope="col" class="text-center py-3">Id</th>
           <th scope="col" class="text-center">Nama Dokter</th>
-          <th scope="col" class="text-center">No Telepon</th>
           <th scope="col" class="text-center">Poli</th>
+          <th scope="col" class="text-center">Jadwal Praktek</th>
+          <th scope="col" class="text-center">Jam Praktek</th>
           <th scope="col" class="text-center">Action</th>
         </tr>
       </thead>
@@ -94,9 +95,10 @@ const AdminPuskesmasDetail = {
                   <tbody>
                     <tr>
                       <td class="text-center">${data.id}</td>
-                      <td class="text-center">${data.namaDokter}</td>
-                      <td class="text-center">${data.noTelepon}</td>
+                      <td class="text-center">${data.namaDokter}</td>                     
                       <td class="text-center">${data.poli}</td>
+                      <td class="text-center">${data.jadwalPraktek}</td>
+                      <td class="text-center">${data.jamPraktek}</td>
                       <td class="d-flex justify-content-center">
                           <a href="#/admin-detail-puskesmas/${data.puskesmasId}/edit/${data.id}"><button type="button" class="btn btn-success me-3">Edit</button></a>
                           <a href="#/admin-detail-puskesmas/${data.puskesmasId}/delete/${data.id}"><button type="button" id="delete" class="btn btn-danger" value="${data.id}">Hapus</button></a>
